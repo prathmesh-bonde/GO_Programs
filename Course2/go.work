@@ -1,0 +1,9 @@
+go 1.19
+
+use (
+	./ninja-exercises/ninja12
+	./ninja-exercises/ninja13/exe1
+	./ninja-exercises/ninja13/exe2
+	./ninja-exercises/ninja13/exe3
+
+)
