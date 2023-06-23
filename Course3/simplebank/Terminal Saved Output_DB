@@ -1,0 +1,507 @@
+Last login: Mon Jun 19 13:24:47 on ttys000
+prathmeshbonde@C1MT2FF3H3QD ~ % cd Desktop/Progs/Go_Progs/Course3/simplebank
+prathmeshbonde@C1MT2FF3H3QD simplebank % docker ps
+zsh: command not found: docker
+prathmeshbonde@C1MT2FF3H3QD simplebank % alias docker=podman
+prathmeshbonde@C1MT2FF3H3QD simplebank % podman ps
+CONTAINER ID  IMAGE                                   COMMAND     CREATED         STATUS         PORTS                   NAMES
+c3dc7f6fa69b  docker.io/library/postgres:15.3-alpine  postgres    26 minutes ago  Up 26 minutes  0.0.0.0:5432->5432/tcp  postgres15.3
+prathmeshbonde@C1MT2FF3H3QD simplebank % docker exec -it postgres15.3 /bin/sh
+/ # psql
+psql (15.3)
+Type "help" for help.
+
+root=# \l
+                                              List of databases
+    Name     | Owner | Encoding |  Collate   |   Ctype    | ICU Locale | Locale Provider | Access privileges 
+-------------+-------+----------+------------+------------+------------+-----------------+-------------------
+ postgres    | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | 
+ root        | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | 
+ simple_bank | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | 
+ template0   | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | =c/root          +
+             |       |          |            |            |            |                 | root=CTc/root
+ template1   | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | =c/root          +
+             |       |          |            |            |            |                 | root=CTc/root
+(5 rows)
+
+root=# \c simple_bank;
+You are now connected to database "simple_bank" as user "root".
+simple_bank=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | schema_migrations | table | root
+(1 row)
+
+simple_bank=# select * from schema_migrations;
+ version | dirty 
+---------+-------
+       1 | t
+(1 row)
+
+simple_bank=# update schema_migrations set dirty =false where version=1;
+UPDATE 1
+simple_bank=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | schema_migrations | table | root
+(1 row)
+
+simple_bank=# exit
+/ # exit
+prathmeshbonde@C1MT2FF3H3QD simplebank % docker exec -it postgres15.3 /bin/sh
+/ # psql
+psql (15.3)
+Type "help" for help.
+
+root=# \l
+                                              List of databases
+    Name     | Owner | Encoding |  Collate   |   Ctype    | ICU Locale | Locale Provider | Access privileges 
+-------------+-------+----------+------------+------------+------------+-----------------+-------------------
+ postgres    | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | 
+ root        | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | 
+ simple_bank | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | 
+ template0   | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | =c/root          +
+             |       |          |            |            |            |                 | root=CTc/root
+ template1   | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | =c/root          +
+             |       |          |            |            |            |                 | root=CTc/root
+(5 rows)
+
+root=# \c simple_bank;
+You are now connected to database "simple_bank" as user "root".
+simple_bank=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | schema_migrations | table | root
+(1 row)
+
+simple_bank=# select * from schema_migrations;
+ version | dirty 
+---------+-------
+       1 | f
+(1 row)
+
+simple_bank=# update schema_migrations set dirty =true where version=1;
+UPDATE 1
+simple_bank=# pwd
+simple_bank-# exit
+Use \q to quit.
+simple_bank-# \q
+/ # exit
+prathmeshbonde@C1MT2FF3H3QD simplebank % docker exec -it postgres15.3 /bin/sh
+/ # psql
+psql (15.3)
+Type "help" for help.
+
+root=# \l
+                                              List of databases
+    Name     | Owner | Encoding |  Collate   |   Ctype    | ICU Locale | Locale Provider | Access privileges 
+-------------+-------+----------+------------+------------+------------+-----------------+-------------------
+ postgres    | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | 
+ root        | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | 
+ simple_bank | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | 
+ template0   | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | =c/root          +
+             |       |          |            |            |            |                 | root=CTc/root
+ template1   | root  | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | =c/root          +
+             |       |          |            |            |            |                 | root=CTc/root
+(5 rows)
+
+root=# \c simple_bank;
+You are now connected to database "simple_bank" as user "root".
+simple_bank=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | schema_migrations | table | root
+(1 row)
+
+simple_bank=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | schema_migrations | table | root
+(1 row)
+
+simple_bank=# update schema_migrations set dirty =false where version=1;
+UPDATE 1
+simple_bank=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | schema_migrations | table | root
+(1 row)
+
+simple_bank=# select * from schema_migrations;
+ version | dirty 
+---------+-------
+       1 | f
+(1 row)
+
+simple_bank=# drop schema_migrations;
+ERROR:  syntax error at or near "schema_migrations"
+LINE 1: drop schema_migrations;
+             ^
+simple_bank=# drop table schema_migrations;
+DROP TABLE
+simple_bank=# \dt
+Did not find any relations.
+simple_bank=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | schema_migrations | table | root
+(1 row)
+
+simple_bank=# drop table schema_migrations;
+DROP TABLE
+simple_bank=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | accounts          | table | root
+ public | entries           | table | root
+ public | schema_migrations | table | root
+ public | transfers         | table | root
+(4 rows)
+
+simple_bank=# select * from accounts;
+ id | owner | balance | currency | created_at 
+----+-------+---------+----------+------------
+(0 rows)
+
+simple_bank=# select * from entries;
+ id | account_id | amount | created_at 
+----+------------+--------+------------
+(0 rows)
+
+simple_bank=# select * from transfers;
+ id | from_account_id | to_account_id | amount | created_at 
+----+-----------------+---------------+--------+------------
+(0 rows)
+
+simple_bank=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | schema_migrations | table | root
+(1 row)
+
+simple_bank=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | accounts          | table | root
+ public | entries           | table | root
+ public | schema_migrations | table | root
+ public | transfers         | table | root
+(4 rows)
+
+simple_bank=# select * from accounts;
+ id | owner | balance | currency |          created_at           
+----+-------+---------+----------+-------------------------------
+  1 | tom   |     200 | USD      | 2023-06-19 10:27:19.113898+00
+(1 row)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+  1 | tom    |     200 | USD      | 2023-06-19 10:27:19.113898+00
+  2 | aogefq |       1 | USD      | 2023-06-19 10:27:19.113898+00
+(2 rows)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+  1 | tom    |     200 | USD      | 2023-06-19 10:27:19.113898+00
+  2 | aogefq |       1 | USD      | 2023-06-19 10:27:19.113898+00
+  3 | nuvmrq |     460 | INR      | 2023-06-19 10:27:19.113898+00
+(3 rows)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+  1 | tom    |     200 | USD      | 2023-06-19 10:27:19.113898+00
+  2 | aogefq |       1 | USD      | 2023-06-19 10:27:19.113898+00
+  3 | nuvmrq |     460 | INR      | 2023-06-19 10:27:19.113898+00
+  4 | cskbgr |     578 | INR      | 2023-06-19 10:27:19.113898+00
+(4 rows)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+  1 | tom    |     200 | USD      | 2023-06-19 10:27:19.113898+00
+  2 | aogefq |       1 | USD      | 2023-06-19 10:27:19.113898+00
+  3 | nuvmrq |     460 | INR      | 2023-06-19 10:27:19.113898+00
+  4 | cskbgr |     578 | INR      | 2023-06-19 10:27:19.113898+00
+  5 | auncsv |     814 | INR      | 2023-06-19 10:27:19.113898+00
+  6 | urlngt |     259 | USD      | 2023-06-19 10:27:19.113898+00
+(6 rows)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+  1 | tom    |     200 | USD      | 2023-06-19 10:27:19.113898+00
+  2 | aogefq |       1 | USD      | 2023-06-19 10:27:19.113898+00
+  3 | nuvmrq |     460 | INR      | 2023-06-19 10:27:19.113898+00
+  4 | cskbgr |     578 | INR      | 2023-06-19 10:27:19.113898+00
+  5 | auncsv |     814 | INR      | 2023-06-19 10:27:19.113898+00
+  6 | urlngt |     259 | USD      | 2023-06-19 10:27:19.113898+00
+(6 rows)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+  1 | tom    |     200 | USD      | 2023-06-19 10:27:19.113898+00
+  2 | aogefq |       1 | USD      | 2023-06-19 10:27:19.113898+00
+  3 | nuvmrq |     460 | INR      | 2023-06-19 10:27:19.113898+00
+  4 | cskbgr |     578 | INR      | 2023-06-19 10:27:19.113898+00
+  5 | auncsv |     814 | INR      | 2023-06-19 10:27:19.113898+00
+  6 | urlngt |     259 | USD      | 2023-06-19 10:27:19.113898+00
+(6 rows)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+  1 | tom    |     200 | USD      | 2023-06-19 10:27:19.113898+00
+  2 | aogefq |       1 | USD      | 2023-06-19 10:27:19.113898+00
+  3 | nuvmrq |     460 | INR      | 2023-06-19 10:27:19.113898+00
+  4 | cskbgr |     578 | INR      | 2023-06-19 10:27:19.113898+00
+  5 | auncsv |     814 | INR      | 2023-06-19 10:27:19.113898+00
+  6 | urlngt |     259 | USD      | 2023-06-19 10:27:19.113898+00
+(6 rows)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+  1 | tom    |     200 | USD      | 2023-06-19 10:27:19.113898+00
+  2 | aogefq |       1 | USD      | 2023-06-19 10:27:19.113898+00
+  3 | nuvmrq |     460 | INR      | 2023-06-19 10:27:19.113898+00
+  4 | cskbgr |     578 | INR      | 2023-06-19 10:27:19.113898+00
+  5 | auncsv |     814 | INR      | 2023-06-19 10:27:19.113898+00
+  6 | urlngt |     259 | USD      | 2023-06-19 10:27:19.113898+00
+ 10 | rezqbz |      65 | EUR      | 2023-06-19 10:27:19.113898+00
+ 11 | erbbbq |     892 | USD      | 2023-06-19 10:27:19.113898+00
+ 12 | vlmzpw |     617 | USD      | 2023-06-19 10:27:19.113898+00
+ 13 | hhvaob |     150 | USD      | 2023-06-19 10:27:19.113898+00
+ 14 | wxubch |     669 | USD      | 2023-06-19 10:27:19.113898+00
+ 15 | jyjwnj |     594 | USD      | 2023-06-19 10:27:19.113898+00
+ 16 | spimei |     955 | USD      | 2023-06-19 10:27:19.113898+00
+ 17 | kaiplu |     172 | EUR      | 2023-06-19 10:27:19.113898+00
+ 18 | irgkuv |     219 | EUR      | 2023-06-19 10:27:19.113898+00
+ 19 | liajdb |     437 | INR      | 2023-06-19 10:27:19.113898+00
+ 20 | nbkwkv |     277 | EUR      | 2023-06-19 10:27:19.113898+00
+ 21 | cvecju |     966 | INR      | 2023-06-19 10:27:19.113898+00
+ 22 | rbrdln |     460 | EUR      | 2023-06-19 10:27:19.113898+00
+ 24 | tvguhg |      41 | EUR      | 2023-06-19 10:27:19.113898+00
+ 25 | qakpvd |     185 | INR      | 2023-06-19 10:27:19.113898+00
+ 26 | rcnnsp |     824 | INR      | 2023-06-19 10:27:19.113898+00
+ 27 | cnvexb |     736 | EUR      | 2023-06-19 10:27:19.113898+00
+ 28 | wyznud |     882 | EUR      | 2023-06-19 10:27:19.113898+00
+ 29 | qxmuat |     211 | INR      | 2023-06-19 10:27:19.113898+00
+ 30 | twsvxg |     171 | USD      | 2023-06-19 10:27:19.113898+00
+ 31 | bxdbks |     737 | EUR      | 2023-06-19 10:27:19.113898+00
+ 32 | pxrvsq |     921 | EUR      | 2023-06-19 10:27:19.113898+00
+ 33 | csvdab |     240 | INR      | 2023-06-19 10:27:19.113898+00
+(29 rows)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+  1 | tom    |     200 | USD      | 2023-06-19 10:27:19.113898+00
+  2 | aogefq |       1 | USD      | 2023-06-19 10:27:19.113898+00
+  3 | nuvmrq |     460 | INR      | 2023-06-19 10:27:19.113898+00
+  4 | cskbgr |     578 | INR      | 2023-06-19 10:27:19.113898+00
+  5 | auncsv |     814 | INR      | 2023-06-19 10:27:19.113898+00
+  6 | urlngt |     259 | USD      | 2023-06-19 10:27:19.113898+00
+ 10 | rezqbz |      65 | EUR      | 2023-06-19 10:27:19.113898+00
+ 11 | erbbbq |     892 | USD      | 2023-06-19 10:27:19.113898+00
+ 12 | vlmzpw |     617 | USD      | 2023-06-19 10:27:19.113898+00
+ 13 | hhvaob |     150 | USD      | 2023-06-19 10:27:19.113898+00
+ 14 | wxubch |     669 | USD      | 2023-06-19 10:27:19.113898+00
+ 15 | jyjwnj |     594 | USD      | 2023-06-19 10:27:19.113898+00
+ 16 | spimei |     955 | USD      | 2023-06-19 10:27:19.113898+00
+ 17 | kaiplu |     172 | EUR      | 2023-06-19 10:27:19.113898+00
+ 18 | irgkuv |     219 | EUR      | 2023-06-19 10:27:19.113898+00
+ 19 | liajdb |     437 | INR      | 2023-06-19 10:27:19.113898+00
+ 20 | nbkwkv |     277 | EUR      | 2023-06-19 10:27:19.113898+00
+ 21 | cvecju |     966 | INR      | 2023-06-19 10:27:19.113898+00
+ 22 | rbrdln |     460 | EUR      | 2023-06-19 10:27:19.113898+00
+ 24 | tvguhg |      41 | EUR      | 2023-06-19 10:27:19.113898+00
+ 25 | qakpvd |     185 | INR      | 2023-06-19 10:27:19.113898+00
+ 26 | rcnnsp |     824 | INR      | 2023-06-19 10:27:19.113898+00
+ 27 | cnvexb |     736 | EUR      | 2023-06-19 10:27:19.113898+00
+ 28 | wyznud |     882 | EUR      | 2023-06-19 10:27:19.113898+00
+ 29 | qxmuat |     211 | INR      | 2023-06-19 10:27:19.113898+00
+ 30 | twsvxg |     171 | USD      | 2023-06-19 10:27:19.113898+00
+ 31 | bxdbks |     737 | EUR      | 2023-06-19 10:27:19.113898+00
+ 32 | pxrvsq |     921 | EUR      | 2023-06-19 10:27:19.113898+00
+ 33 | csvdab |     240 | INR      | 2023-06-19 10:27:19.113898+00
+ 34 | knhhwf |     973 | USD      | 2023-06-19 10:27:19.113898+00
+ 35 | svwjwd |     900 | EUR      | 2023-06-19 10:27:19.113898+00
+ 36 | djfdid |     519 | EUR      | 2023-06-19 10:27:19.113898+00
+ 38 | xlqpea |     820 | USD      | 2023-06-19 10:27:19.113898+00
+ 39 | pefwod |     925 | EUR      | 2023-06-19 10:27:19.113898+00
+ 40 | nwtfam |     340 | INR      | 2023-06-19 10:27:19.113898+00
+ 41 | glcemr |     713 | INR      | 2023-06-19 10:27:19.113898+00
+ 42 | uocwnh |     436 | EUR      | 2023-06-19 10:27:19.113898+00
+ 43 | hchmzg |      63 | USD      | 2023-06-19 10:27:19.113898+00
+ 44 | vpombh |     318 | INR      | 2023-06-19 10:27:19.113898+00
+ 45 | gjtbqz |     507 | INR      | 2023-06-19 10:27:19.113898+00
+ 46 | oxdxar |     634 | EUR      | 2023-06-19 10:27:19.113898+00
+ 47 | ayxohz |     938 | EUR      | 2023-06-19 10:27:19.113898+00
+ 48 | ztexvw |     674 | INR      | 2023-06-19 10:27:19.113898+00
+(43 rows)
+
+simple_bank=# delete from accounts;
+DELETE 43
+simple_bank=# select * from accounts;
+ id | owner | balance | currency | created_at 
+----+-------+---------+----------+------------
+(0 rows)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+ 49 | peesig |     773 | USD      | 2023-06-19 10:27:19.113898+00
+(1 row)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+ 49 | peesig |     773 | USD      | 2023-06-19 10:27:19.113898+00
+(1 row)
+
+simple_bank=# select * from accounts;
+ id | owner  | balance | currency |          created_at           
+----+--------+---------+----------+-------------------------------
+ 49 | peesig |     773 | USD      | 2023-06-19 10:27:19.113898+00
+(1 row)
+
+simple_bank=# select * from entries;
+ id | account_id | amount |          created_at           
+----+------------+--------+-------------------------------
+  1 |         64 |    691 | 2023-06-19 10:27:19.113898+00
+  2 |         65 |    412 | 2023-06-19 10:27:19.113898+00
+  3 |         66 |    902 | 2023-06-19 10:27:19.113898+00
+  4 |         66 |    323 | 2023-06-19 10:27:19.113898+00
+  5 |         66 |    611 | 2023-06-19 10:27:19.113898+00
+  6 |         66 |    949 | 2023-06-19 10:27:19.113898+00
+  7 |         66 |    443 | 2023-06-19 10:27:19.113898+00
+  8 |         66 |    159 | 2023-06-19 10:27:19.113898+00
+  9 |         66 |    649 | 2023-06-19 10:27:19.113898+00
+ 10 |         66 |    892 | 2023-06-19 10:27:19.113898+00
+ 11 |         66 |    547 | 2023-06-19 10:27:19.113898+00
+ 12 |         66 |    995 | 2023-06-19 10:27:19.113898+00
+ 13 |         87 |    910 | 2023-06-19 10:27:19.113898+00
+ 14 |         88 |     97 | 2023-06-19 10:27:19.113898+00
+ 15 |         89 |    534 | 2023-06-19 10:27:19.113898+00
+ 16 |         89 |    487 | 2023-06-19 10:27:19.113898+00
+ 17 |         89 |    121 | 2023-06-19 10:27:19.113898+00
+ 18 |         89 |    763 | 2023-06-19 10:27:19.113898+00
+ 19 |         89 |    693 | 2023-06-19 10:27:19.113898+00
+ 20 |         89 |    858 | 2023-06-19 10:27:19.113898+00
+ 21 |         89 |    473 | 2023-06-19 10:27:19.113898+00
+ 22 |         89 |    598 | 2023-06-19 10:27:19.113898+00
+ 23 |         89 |    332 | 2023-06-19 10:27:19.113898+00
+ 24 |         89 |    448 | 2023-06-19 10:27:19.113898+00
+(24 rows)
+
+simple_bank=# select * from transfers;
+ id | from_account_id | to_account_id | amount |          created_at           
+----+-----------------+---------------+--------+-------------------------------
+  1 |              67 |            68 |    809 | 2023-06-19 10:27:19.113898+00
+  2 |              69 |            70 |    527 | 2023-06-19 10:27:19.113898+00
+  3 |              71 |            72 |    863 | 2023-06-19 10:27:19.113898+00
+  4 |              72 |            71 |    685 | 2023-06-19 10:27:19.113898+00
+  5 |              71 |            72 |    245 | 2023-06-19 10:27:19.113898+00
+  6 |              72 |            71 |    179 | 2023-06-19 10:27:19.113898+00
+  7 |              71 |            72 |    660 | 2023-06-19 10:27:19.113898+00
+  8 |              72 |            71 |    695 | 2023-06-19 10:27:19.113898+00
+  9 |              71 |            72 |     91 | 2023-06-19 10:27:19.113898+00
+ 10 |              72 |            71 |    577 | 2023-06-19 10:27:19.113898+00
+ 11 |              71 |            72 |    898 | 2023-06-19 10:27:19.113898+00
+ 12 |              72 |            71 |    814 | 2023-06-19 10:27:19.113898+00
+ 13 |              90 |            91 |    654 | 2023-06-19 10:27:19.113898+00
+ 14 |              92 |            93 |    866 | 2023-06-19 10:27:19.113898+00
+ 15 |              94 |            95 |     56 | 2023-06-19 10:27:19.113898+00
+ 16 |              95 |            94 |    553 | 2023-06-19 10:27:19.113898+00
+ 17 |              94 |            95 |    761 | 2023-06-19 10:27:19.113898+00
+ 18 |              95 |            94 |    653 | 2023-06-19 10:27:19.113898+00
+ 19 |              94 |            95 |    877 | 2023-06-19 10:27:19.113898+00
+ 20 |              95 |            94 |      9 | 2023-06-19 10:27:19.113898+00
+ 21 |              94 |            95 |    683 | 2023-06-19 10:27:19.113898+00
+ 22 |              95 |            94 |    156 | 2023-06-19 10:27:19.113898+00
+ 23 |              94 |            95 |    467 | 2023-06-19 10:27:19.113898+00
+ 24 |              95 |            94 |    806 | 2023-06-19 10:27:19.113898+00
+(24 rows)
+
+simple_bank=# delete from entries;
+DELETE 24
+simple_bank=# delete from transfers;
+DELETE 24
+simple_bank=# delete from accounts;
+DELETE 45
+simple_bank=# select * from accounts;
+ id  | owner  | balance | currency |          created_at           
+-----+--------+---------+----------+-------------------------------
+ 110 | xledyd |     447 | USD      | 2023-06-19 10:27:19.113898+00
+ 111 | ipfpuk |     446 | INR      | 2023-06-19 10:27:19.113898+00
+ 112 | xdnour |     524 | INR      | 2023-06-19 10:27:19.113898+00
+ 113 | ukumny |     561 | INR      | 2023-06-19 10:27:19.113898+00
+ 114 | fgujgy |     664 | USD      | 2023-06-19 10:27:19.113898+00
+ 115 | rrujuw |     193 | EUR      | 2023-06-19 10:27:19.113898+00
+  96 | pyweat |     586 | EUR      | 2023-06-19 10:27:19.113898+00
+  97 | aobwep |     901 | INR      | 2023-06-19 10:27:19.113898+00
+  98 | iwjkbc |     852 | INR      | 2023-06-19 10:27:19.113898+00
+ 100 | dkvwsa |     740 | INR      | 2023-06-19 10:27:19.113898+00
+ 101 | kdukhl |     149 | EUR      | 2023-06-19 10:27:19.113898+00
+ 102 | dxndjt |     857 | USD      | 2023-06-19 10:27:19.113898+00
+ 103 | lcacku |     384 | USD      | 2023-06-19 10:27:19.113898+00
+ 104 | ebdajf |     903 | INR      | 2023-06-19 10:27:19.113898+00
+ 105 | hmeviu |      30 | INR      | 2023-06-19 10:27:19.113898+00
+ 106 | bhfmcy |     125 | USD      | 2023-06-19 10:27:19.113898+00
+ 107 | gdznow |     688 | INR      | 2023-06-19 10:27:19.113898+00
+ 108 | znxfjc |     747 | INR      | 2023-06-19 10:27:19.113898+00
+ 109 | ptlyfd |       3 | USD      | 2023-06-19 10:27:19.113898+00
+ 116 | wjcymf |     127 | INR      | 2023-06-19 10:27:19.113898+00
+ 117 | hellmt |     379 | USD      | 2023-06-19 10:27:19.113898+00
+ 118 | mbcuwt |     734 | USD      | 2023-06-19 10:27:19.113898+00
+(22 rows)
+
+simple_bank=# select * from entries;
+ id | account_id | amount |          created_at           
+----+------------+--------+-------------------------------
+ 25 |        110 |    437 | 2023-06-19 10:27:19.113898+00
+ 26 |        111 |    771 | 2023-06-19 10:27:19.113898+00
+ 27 |        112 |    429 | 2023-06-19 10:27:19.113898+00
+ 28 |        112 |    681 | 2023-06-19 10:27:19.113898+00
+ 29 |        112 |    151 | 2023-06-19 10:27:19.113898+00
+ 30 |        112 |    256 | 2023-06-19 10:27:19.113898+00
+ 31 |        112 |    143 | 2023-06-19 10:27:19.113898+00
+ 32 |        112 |    674 | 2023-06-19 10:27:19.113898+00
+ 33 |        112 |    823 | 2023-06-19 10:27:19.113898+00
+ 34 |        112 |    119 | 2023-06-19 10:27:19.113898+00
+ 35 |        112 |    745 | 2023-06-19 10:27:19.113898+00
+ 36 |        112 |     83 | 2023-06-19 10:27:19.113898+00
+(12 rows)
+
+simple_bank=# select * from transfers;
+ id | from_account_id | to_account_id | amount |          created_at           
+----+-----------------+---------------+--------+-------------------------------
+ 25 |             113 |           114 |    257 | 2023-06-19 10:27:19.113898+00
+ 26 |             115 |           116 |    322 | 2023-06-19 10:27:19.113898+00
+ 27 |             117 |           118 |    667 | 2023-06-19 10:27:19.113898+00
+ 28 |             118 |           117 |    535 | 2023-06-19 10:27:19.113898+00
+ 29 |             117 |           118 |     24 | 2023-06-19 10:27:19.113898+00
+ 30 |             118 |           117 |    312 | 2023-06-19 10:27:19.113898+00
+ 31 |             117 |           118 |    466 | 2023-06-19 10:27:19.113898+00
+ 32 |             118 |           117 |    929 | 2023-06-19 10:27:19.113898+00
+ 33 |             117 |           118 |    539 | 2023-06-19 10:27:19.113898+00
+ 34 |             118 |           117 |     12 | 2023-06-19 10:27:19.113898+00
+ 35 |             117 |           118 |    926 | 2023-06-19 10:27:19.113898+00
+ 36 |             118 |           117 |    500 | 2023-06-19 10:27:19.113898+00
+(12 rows)
+
+simple_bank=# 
